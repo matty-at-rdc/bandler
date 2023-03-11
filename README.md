@@ -11,3 +11,9 @@ It's a basic bunder! It bundles... but not very well! It is largely based on [th
 - You run it -- `yarn node app.js <entry-path>`
   - Full path to entry is required at the moment and circular dependencies make it perish so be careful
 - Find your bundle inside of _build_ called _bundle.js_
+
+## Demo
+
+![Before](meta/before.png)
+
+![After](meta/after.png)

@@ -16,7 +16,7 @@ var main = function main() {
   return (0, _m.determineCoolness)();
 };
 var result = main();
-console.log("The result of determined coolness was: ".concat(result));
+console.log("The result of determine coolness was: ".concat(result));
   },
   map: {"./m1.js":1}
 },1: {
@@ -29,7 +29,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.determineCoolness = void 0;
 var _m = require("./m2.js");
 var determineCoolness = function determineCoolness() {
-  return (0, _m.add)(8, 9);
+  return (0, _m.add)(4, 5);
 };
 
 // Fix Circulars
