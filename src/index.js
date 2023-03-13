@@ -56,6 +56,9 @@ const createModuleInfo = (fp, id) => {
   const code = generateCodeFromAST(ast)
   // console.log(`Code: ${JSON.stringify(code, null, 2)}\n\n`)
 
+  // Return the privided id, fullpath to the file, 
+  // the extracted array of deps, and the stringified 
+  // version of the source code from the file.
   return { id, fp, deps, code }
 }
 
@@ -73,6 +76,8 @@ const createDependencyGraph = (entry) => {
       module.map[depPath] = moduleInfo.id
     })
   }
+
+  console.log(`graphArray length is: ${graphArray.length}`)
   return graphArray
 }
 
