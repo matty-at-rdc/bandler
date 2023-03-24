@@ -77,7 +77,7 @@ const createDependencyGraph = (entry) => {
     })
   }
 
-  console.log(`graphArray length is: ${graphArray.length}`)
+  // console.log(`graphArray length is: ${graphArray.length}`)
   return graphArray
 }
 
