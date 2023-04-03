@@ -1,4 +1,4 @@
-// Fix circulars...
-// import { magicNumber } from "./m1"
+// Circular
+import { magicNumber } from "./m1"
 
-export const add = (a, b) => a + b
+export const add = (a, b) => a + b + magicNumber()

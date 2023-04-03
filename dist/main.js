@@ -1,0 +1,1 @@
+(()=>{"use strict";const e=9+(()=>1)();console.log(`The result of determine coolness was: ${e}`)})();

@@ -62,18 +62,43 @@ const createModuleInfo = (fp, id) => {
   return { id, fp, deps, code }
 }
 
+const graphArrayCircularDependencyAlreadySatisfied = (graphArray, fp1, fp2) => {
+  fp1Found = graphArray.find(_module => _module.fp === fp1)
+  fp2Found = graphArray.find(_module => _module.fp === fp2)
+
+  if (fp1Found && fp2Found) {
+    return true
+  }
+}
+
 const createDependencyGraph = (entry) => {
   let id = 0
   const entryInfo = createModuleInfo(entry, id)
 
   const graphArray = [entryInfo]
+  // This is a for loop over an array whose length will change 
   for (const module of graphArray) {
+    if (graphArray.length > 8) {
+      console.log(`\n\n\n\n\n\n${JSON.stringify(graphArray, null, 2)}`);
+      process.exit(1)
+    }
     module.map = {}
     module.deps.forEach((depPath) => {
       const moduleDepPath = resolve(depPath, { basedir: path.dirname(module.fp) })
       const moduleInfo = createModuleInfo(moduleDepPath, ++id)
-      graphArray.push(moduleInfo)
-      module.map[depPath] = moduleInfo.id
+      // console.log(`Module Info Just Made For Module ID ${module.id}: ${JSON.stringify(moduleInfo, null, 2)}`);
+      if (graphArrayCircularDependencyAlreadySatisfied(graphArray, module.fp, moduleInfo.fp)) {
+        console.log(`WARN: module ${module.fp} and ${moduleInfo.fp} both already exist in the graph array trying to not cause circular issues here`)
+        console.log(`WARN Finding an earlier refer to a module with path: ${moduleInfo.fp}`)
+        const _m = graphArray.find(_module => _module.fp === moduleInfo.fp)
+        console.log(`WARN: module with path ${_m.fp} whose ID is: ${_m.id}`);
+        // console.log(`\n\n\nDEBUG: ${JSON.stringify(graphArray, null, 2)}`);
+
+        module.map[depPath] = _m.id
+      } else {
+        graphArray.push(moduleInfo)
+        module.map[depPath] = moduleInfo.id
+      }
     })
   }
 
@@ -83,8 +108,8 @@ const createDependencyGraph = (entry) => {
 
 const pack = (graph) => {
   const moduleArgArr = graph.map((module) => templates.factoryAndMapObject(module))
-  const bunlde = templates.iifeBundler(moduleArgArr)
-  return bunlde
+  const bundle = templates.iifeBundler(moduleArgArr)
+  return bundle
 }
 
 module.exports = {

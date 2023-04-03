@@ -1,121 +1,68 @@
-
-// An IIFE which accepts a parameter called modules which will
-// be an array of "modules". These are the 'modules' you created 
-// in the invoker of factoryAndMapObject ("pack" right now).
-// It is the "moduleArgArr" parameter passed to "iifeBundler"
-(function(modules){
-
-  // We declare a new function which we call "require" which accepts
-  // a parameter "id" (which will begin with the entry point id 0).
+;(function (modules) {
   const require = (id) => {
+    const { factory, map } = modules[id]
 
-    // We extract the "factory" and "map" properties from the module,
-    // looking up the module by the provided id.
-    const {factory, map} = modules[id];
+    const localRequire = (requireDeclarationName) =>
+      require(map[requireDeclarationName])
 
-    // We delcare an inner function called localRequire. 
-    // It is a function which itself calls the "require" function
-    // which you are in right now (whoa!). It accepts an argument 
-    // called requireDeclarationName which will be a "key" 
-    // in the current modules "map" property. The value of 
-    // said property will be itself an array of modules, since 
-    // that is what "require" expects!
-    const localRequire = (requireDeclarationName) => require(map[requireDeclarationName]); 
+    const module = { exports: {} }
 
-    // We declare an object called module which has a
-    // key called exports which itself is an object.
-    const module = {exports: {}};
+    factory(module.exports, localRequire)
 
-    // We call the "factory" function we extracted from the module object 
-    // we provide as parameter the module.exports object we made above
-    // and the localRequore function which is a closured and which
-    // itself has a closured around this instance of "require"
-    factory(module.exports, localRequire); 
+    return module.exports
+  }
 
-    // Return the exports property of the locally made "module" object
-    return module.exports; 
-  } 
+  require(0)
+})({
+  0: {
+    factory: (exports, require) => {
+      "use strict"
 
-  // Start the chain reaction by invoking require with the Oth ID!
-  require(0);
-})({0: {
-  // A property on each module with the key: "factory"
-  // whose value is a function which accepts two paramters
-  // one called 'exports' and one called 'require' the two 
-  // parameters are used by the body of the function which is
-  // not available until after the code has been built so at the 
-  // time of writing this comment i cannot see it... maybe 
-  // compile it and  then come back and explain what you saw...  
-  factory: (exports, require) => {
-    "use strict";
-
-var _m = require("./m1.js");
-var main = function main() {
-  return (0, _m.determineCoolness)();
-};
-var result = main();
-console.log("The result of determine coolness was: ".concat(result));
+      var _m = require("./m1.js")
+      var main = function main() {
+        return (0, _m.determineCoolness)()
+      }
+      var result = main()
+      console.log("The result of determine coolness was: ".concat(result))
+    },
+    map: { "./m1.js": 1 },
   },
+  1: {
+    factory: (exports, require) => {
+      "use strict"
 
-  // A property called 'map' which contains the module in question's
-  // map property as a string. The map property is added to each module  
-  // we loop over....
-  map: {"./m1.js":1}
-},1: {
-  // A property on each module with the key: "factory"
-  // whose value is a function which accepts two paramters
-  // one called 'exports' and one called 'require' the two 
-  // parameters are used by the body of the function which is
-  // not available until after the code has been built so at the 
-  // time of writing this comment i cannot see it... maybe 
-  // compile it and  then come back and explain what you saw...  
-  factory: (exports, require) => {
-    "use strict";
+      Object.defineProperty(exports, "__esModule", {
+        value: true,
+      })
+      exports.magicNumber = exports.determineCoolness = void 0
+      var _m = require("./m2.js")
+      var determineCoolness = function determineCoolness() {
+        return (0, _m.add)(4, 5)
+      }
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.determineCoolness = void 0;
-var _m = require("./m2.js");
-var determineCoolness = function determineCoolness() {
-  return (0, _m.add)(4, 5);
-};
-
-// Fix Circulars
-// export const magicNumber = 42
-exports.determineCoolness = determineCoolness;
+      // Circular
+      exports.determineCoolness = determineCoolness
+      var magicNumber = 1
+      exports.magicNumber = magicNumber
+    },
+    map: { "./m2.js": 2 },
   },
+  2: {
+    factory: (exports, require) => {
+      "use strict"
 
-  // A property called 'map' which contains the module in question's
-  // map property as a string. The map property is added to each module  
-  // we loop over....
-  map: {"./m2.js":2}
-},2: {
-  // A property on each module with the key: "factory"
-  // whose value is a function which accepts two paramters
-  // one called 'exports' and one called 'require' the two 
-  // parameters are used by the body of the function which is
-  // not available until after the code has been built so at the 
-  // time of writing this comment i cannot see it... maybe 
-  // compile it and  then come back and explain what you saw...  
-  factory: (exports, require) => {
-    "use strict";
+      Object.defineProperty(exports, "__esModule", {
+        value: true,
+      })
+      exports.add = void 0
+      var _m = require("./m1")
+      // Circular
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.add = void 0;
-// Fix circulars...
-// import { magicNumber } from "./m1"
-
-var add = function add(a, b) {
-  return a + b;
-};
-exports.add = add;
+      var add = function add(a, b) {
+        return a + b + _m.magicNumber
+      }
+      exports.add = add
+    },
+    map: { "./m1": 1 },
   },
-
-  // A property called 'map' which contains the module in question's
-  // map property as a string. The map property is added to each module  
-  // we loop over....
-  map: {}
-}})
+})

@@ -1,4 +1,4 @@
-const factoryAndMapObject = (module) => `${module.id}: {
+const factoryAndMapObjectVerbose = (module) => `${module.id}: {
   // A property on each module with the key: "factory"
   // whose value is a function which accepts two paramters
   // one called 'exports' and one called 'require' the two 
@@ -16,7 +16,7 @@ const factoryAndMapObject = (module) => `${module.id}: {
   map: ${JSON.stringify(module.map)}
 }`
 
-const iifeBundler = (moduleArgArr) => `
+const iifeBundlerVerbose = (moduleArgArr) => `
 // An IIFE which accepts a parameter called modules which will
 // be an array of "modules". These are the 'modules' you created 
 // in the invoker of factoryAndMapObject ("pack" right now).
@@ -59,7 +59,36 @@ const iifeBundler = (moduleArgArr) => `
 })({${moduleArgArr.join()}})
 `
 
+const factoryAndMapObjectTerse = (module) => `${module.id}: {
+  factory: (exports, require) => {
+    ${module.code}
+  },
+  map: ${JSON.stringify(module.map)}
+}`
+
+const iifeBundlerTerse = (moduleArgArr) => `
+
+(function(modules){
+  const require = (id) => {
+    const {factory, map} = modules[id];
+
+    const localRequire = (requireDeclarationName) => require(map[requireDeclarationName]); 
+
+    const module = {exports: {}};
+
+    factory(module.exports, localRequire); 
+
+    return module.exports; 
+  } 
+
+  require(0);
+})({${moduleArgArr.join()}})
+`
+
+const factoryAndMapObject = factoryAndMapObjectTerse
+const iifeBundler = iifeBundlerTerse
+
 module.exports = {
   factoryAndMapObject,
-  iifeBundler
+  iifeBundler,
 }
