@@ -7,7 +7,7 @@
     "build": "node app.js",
     "fmt": "standard --env mocha --env jest --fix src/**/*.js test/**/*.js",
     "test": "jest",
-    "serve": "http-server ./build"  
+    "serve": "http-server ./build"
   },
   "standard": {
     "globals": [
@@ -15,7 +15,9 @@
     ]
   },
   "jest": {
-    "transform": {"\\.[jt]sx?$": "babel-jest"}
+    "transform": {
+      "\\.[jt]sx?$": "babel-jest"
+    }
   },
   "packageManager": "yarn@3.4.1",
   "devDependencies": {
