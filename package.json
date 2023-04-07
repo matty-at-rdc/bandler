@@ -5,10 +5,9 @@
   "license": "MIT",
   "scripts": {
     "build": "node app.js",
-    "fmt": "standard --env mocha --fix src/**/*.js test/**/*.js",
+    "fmt": "standard --env mocha --env jest --fix src/**/*.js test/**/*.js",
     "test": "jest",
-    "serve": "http-server ./build",
-    "wp": "webpack build --entry ./example-app/entry.js"
+    "serve": "http-server ./build"  
   },
   "standard": {
     "globals": [
@@ -16,15 +15,13 @@
     ]
   },
   "jest": {
-    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest"
+    "transform": {"\\.[jt]sx?$": "babel-jest"}
   },
   "packageManager": "yarn@3.4.1",
   "devDependencies": {
     "babel-jest": "^29.5.0",
     "jest": "^29.5.0",
-    "standard": "^17.0.0",
-    "webpack": "^5.76.3",
-    "webpack-cli": "^5.0.1"
+    "standard": "^17.0.0"
   },
   "dependencies": {
     "@babel/core": "^7.21.0",

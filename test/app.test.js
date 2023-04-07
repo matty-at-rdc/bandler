@@ -1,7 +1,7 @@
 const path = require('path')
 const bundler = require('../src/index')
 
-beforeEach( () => {
+beforeEach(() => {
   jest.resetAllMocks()
 })
 
@@ -26,7 +26,7 @@ test('#pack seems to work', () => {
 
   // All our bundle does when invoked is call `console.log` so let's monitor it
   console.log = jest.fn()
-  const invokableBundle = Function(bundle)
-  invokableBundle()
-  expect(console.log.mock.calls[0][0]).toBe("The result of determine coolness was: 9")
+  const invocableBundle = new Function(bundle) // eslint-disable-line
+  invocableBundle()
+  expect(console.log.mock.calls[0][0]).toBe('The result of determine coolness was: 9')
 })

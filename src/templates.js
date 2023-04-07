@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const factoryAndMapObjectVerbose = (module) => `${module.id}: {
   // A property on each module with the key: "factory"
   // whose value is a function which accepts two paramters
@@ -58,6 +59,7 @@ const iifeBundlerVerbose = (moduleArgArr) => `
   require(0);
 })({${moduleArgArr.join()}})
 `
+/* eslint-disable no-unused-vars */
 
 const factoryAndMapObjectTerse = (module) => `${module.id}: {
   factory: (exports, require) => {
@@ -90,5 +92,5 @@ const iifeBundler = iifeBundlerTerse
 
 module.exports = {
   factoryAndMapObject,
-  iifeBundler,
+  iifeBundler
 }
