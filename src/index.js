@@ -52,14 +52,23 @@ const createModuleInfo = (fp, id) => {
   const deps = extractDependenciesFromAST(ast)
   // console.log(`Dependencies: ${JSON.stringify(deps, null, 2)}\n\n`)
 
-  // Create transpoiled code from AST
+  // Create transpiled code from AST
   const code = generateCodeFromAST(ast)
   // console.log(`Code: ${JSON.stringify(code, null, 2)}\n\n`)
 
-  // Return the privided id, fullpath to the file, 
-  // the extracted array of deps, and the stringified 
+  // Return the privided id, fullpath to the file,
+  // the extracted array of deps, and the stringified
   // version of the source code from the file.
   return { id, fp, deps, code }
+}
+
+const graphArrayCircularDependencyAlreadySatisfied = (graphArray, fp1, fp2) => {
+  const fp1Found = graphArray.find(_module => _module.fp === fp1)
+  const fp2Found = graphArray.find(_module => _module.fp === fp2)
+
+  if (fp1Found && fp2Found) {
+    return true
+  }
 }
 
 const createDependencyGraph = (entry) => {
@@ -67,24 +76,34 @@ const createDependencyGraph = (entry) => {
   const entryInfo = createModuleInfo(entry, id)
 
   const graphArray = [entryInfo]
+  // This is a for loop over an array whose length will change
   for (const module of graphArray) {
+    if (graphArray.length > 999) {
+      console.error('Graph too large exiting 1')
+      process.exit(1)
+    }
     module.map = {}
     module.deps.forEach((depPath) => {
       const moduleDepPath = resolve(depPath, { basedir: path.dirname(module.fp) })
       const moduleInfo = createModuleInfo(moduleDepPath, ++id)
-      graphArray.push(moduleInfo)
-      module.map[depPath] = moduleInfo.id
+      if (graphArrayCircularDependencyAlreadySatisfied(graphArray, module.fp, moduleInfo.fp)) {
+        console.warn(`WARN: module ${module.fp} and ${moduleInfo.fp} both already exist in the graph potential unsupported circular dependency. Not pushing another node into the graph, but runtime state is at risk`)
+        const _m = graphArray.find(_module => _module.fp === moduleInfo.fp)
+        module.map[depPath] = _m.id
+      } else {
+        graphArray.push(moduleInfo)
+        module.map[depPath] = moduleInfo.id
+      }
     })
   }
 
-  // console.log(`graphArray length is: ${graphArray.length}`)
   return graphArray
 }
 
 const pack = (graph) => {
   const moduleArgArr = graph.map((module) => templates.factoryAndMapObject(module))
-  const bunlde = templates.iifeBundler(moduleArgArr)
-  return bunlde
+  const bundle = templates.iifeBundler(moduleArgArr)
+  return bundle
 }
 
 module.exports = {

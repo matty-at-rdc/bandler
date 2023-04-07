@@ -4,9 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "node src/index.js",
-    "fmt": "standard --env mocha --fix src/**/*.js test/**/*.js",
-    "test": "jest"
+    "build": "node app.js",
+    "fmt": "standard --env mocha --env jest --fix src/**/*.js test/**/*.js",
+    "test": "jest",
+    "serve": "http-server ./build"
   },
   "standard": {
     "globals": [
@@ -14,7 +15,9 @@
     ]
   },
   "jest": {
-    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest"
+    "transform": {
+      "\\.[jt]sx?$": "babel-jest"
+    }
   },
   "packageManager": "yarn@3.4.1",
   "devDependencies": {
@@ -27,6 +30,7 @@
     "@babel/parser": "^7.21.2",
     "@babel/preset-env": "^7.20.2",
     "@babel/traverse": "^7.21.2",
+    "http-server": "^14.1.1",
     "resolve": "^1.22.1"
   }
 }

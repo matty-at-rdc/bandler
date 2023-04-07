@@ -2,13 +2,14 @@ const fs = require('fs')
 const path = require("path")
 const bundler = require('./src/index.js')
 
+// Ex: /Users/matt.cale/Desktop/Code/personal/javascript/bandler/example-app/entry.js
 const args = process.argv.slice(2)
 
 if (!args.length) {
     process.exit(1)
 }
 
-const p = '/Users/matt.cale/Desktop/Code/personal/javascript/bandler/example-app/entry.js'
+const p = args[0]
 const graph = bundler.createDependencyGraph(p)
 const bundle = bundler.pack(graph)
 
