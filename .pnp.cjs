@@ -35,7 +35,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["babel-jest", "virtual:07bd3e4f2966db006c0eb8430c9b2c1d15a17d3c367b97ffb236f83898ba5a07eed63924d61f585dbd0b61ec7976a1825d159fca9a80cb8b1720494968dd3379#npm:29.5.0"],\
             ["http-server", "npm:14.1.1"],\
             ["jest", "virtual:07bd3e4f2966db006c0eb8430c9b2c1d15a17d3c367b97ffb236f83898ba5a07eed63924d61f585dbd0b61ec7976a1825d159fca9a80cb8b1720494968dd3379#npm:29.5.0"],\
-            ["resolve", "patch:resolve@npm%3A1.22.1#~builtin<compat/resolve>::version=1.22.1&hash=c3c19d"],\
+            ["resolve", "patch:resolve@npm%3A1.22.3#~builtin<compat/resolve>::version=1.22.3&hash=c3c19d"],\
             ["standard", "npm:17.0.0"]\
           ],\
           "linkType": "SOFT"\
@@ -3578,7 +3578,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["babel-jest", "virtual:07bd3e4f2966db006c0eb8430c9b2c1d15a17d3c367b97ffb236f83898ba5a07eed63924d61f585dbd0b61ec7976a1825d159fca9a80cb8b1720494968dd3379#npm:29.5.0"],\
             ["http-server", "npm:14.1.1"],\
             ["jest", "virtual:07bd3e4f2966db006c0eb8430c9b2c1d15a17d3c367b97ffb236f83898ba5a07eed63924d61f585dbd0b61ec7976a1825d159fca9a80cb8b1720494968dd3379#npm:29.5.0"],\
-            ["resolve", "patch:resolve@npm%3A1.22.1#~builtin<compat/resolve>::version=1.22.1&hash=c3c19d"],\
+            ["resolve", "patch:resolve@npm%3A1.22.3#~builtin<compat/resolve>::version=1.22.3&hash=c3c19d"],\
             ["standard", "npm:17.0.0"]\
           ],\
           "linkType": "SOFT"\
@@ -5482,6 +5482,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/is-core-module-npm-2.11.0-70061e141a-f96fd490c6.zip/node_modules/is-core-module/",\
           "packageDependencies": [\
             ["is-core-module", "npm:2.11.0"],\
+            ["has", "npm:1.0.3"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:2.12.1", {\
+          "packageLocation": "./.yarn/cache/is-core-module-npm-2.12.1-ce74e89160-f04ea30533.zip/node_modules/is-core-module/",\
+          "packageDependencies": [\
+            ["is-core-module", "npm:2.12.1"],\
             ["has", "npm:1.0.3"]\
           ],\
           "linkType": "HARD"\
@@ -7420,6 +7428,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["resolve", "patch:resolve@npm%3A1.22.1#~builtin<compat/resolve>::version=1.22.1&hash=c3c19d"],\
             ["is-core-module", "npm:2.11.0"],\
+            ["path-parse", "npm:1.0.7"],\
+            ["supports-preserve-symlinks-flag", "npm:1.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["patch:resolve@npm%3A1.22.3#~builtin<compat/resolve>::version=1.22.3&hash=c3c19d", {\
+          "packageLocation": "./.yarn/cache/resolve-patch-bb62d3c3c5-ad59734723.zip/node_modules/resolve/",\
+          "packageDependencies": [\
+            ["resolve", "patch:resolve@npm%3A1.22.3#~builtin<compat/resolve>::version=1.22.3&hash=c3c19d"],\
+            ["is-core-module", "npm:2.12.1"],\
             ["path-parse", "npm:1.0.7"],\
             ["supports-preserve-symlinks-flag", "npm:1.0.0"]\
           ],\

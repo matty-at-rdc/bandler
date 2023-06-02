@@ -7,7 +7,8 @@
     "build": "node app.js",
     "fmt": "standard --env mocha --env jest --fix src/**/*.js test/**/*.js",
     "test": "jest",
-    "serve": "http-server ./build"
+    "serve": "http-server ./build",
+    "clean": "rm -rf build/bundle.js"
   },
   "standard": {
     "globals": [
@@ -31,6 +32,6 @@
     "@babel/preset-env": "^7.20.2",
     "@babel/traverse": "^7.21.2",
     "http-server": "^14.1.1",
-    "resolve": "^1.22.1"
+    "resolve": "^1.22.2"
   }
 }
