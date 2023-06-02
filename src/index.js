@@ -42,21 +42,21 @@ const generateCodeFromAST = (ast) => {
 const createModuleInfo = (fp, id) => {
   // Gets a file's content as UTF8 text
   const content = getFileContents(fp)
-  // console.log(`Content: ${content}\n\n`)
+  // console.log(`Content:\n${content}\n==========\n`)
 
   // Create the Abstract Syntax Tree (ast)
   const ast = createASTFromText(content)
-  // console.log(`AST: ${JSON.stringify(ast, null, 2)}\n\n`)
+  // console.log(`AST: ${JSON.stringify(ast, null, 2)}\n==========\n`)
 
   // Create a list of just dependencies listed in the file
   const deps = extractDependenciesFromAST(ast)
-  // console.log(`Dependencies: ${JSON.stringify(deps, null, 2)}\n\n`)
+  // console.log(`Dependencies for ID ${id}:\n${JSON.stringify(deps, null, 2)}\n==========\n`)
 
   // Create transpiled code from AST
   const code = generateCodeFromAST(ast)
-  // console.log(`Code: ${JSON.stringify(code, null, 2)}\n\n`)
+  // console.log(`Transformed code:\n${code}\n==========\n`)
 
-  // Return the privided id, fullpath to the file,
+  // Return the provided id, fullpath to the file,
   // the extracted array of deps, and the stringified
   // version of the source code from the file.
   return { id, fp, deps, code }
