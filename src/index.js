@@ -62,14 +62,7 @@ const createModuleInfo = (fp, id) => {
   return { id, fp, deps, code }
 }
 
-const graphArrayCircularDependencyAlreadySatisfied = (graphArray, fp1, fp2) => {
-  const fp1Found = graphArray.find(_module => _module.fp === fp1)
-  const fp2Found = graphArray.find(_module => _module.fp === fp2)
 
-  if (fp1Found && fp2Found) {
-    return true
-  }
-}
 
 const createDependencyGraph = (entry) => {
   let id = 0
@@ -78,22 +71,12 @@ const createDependencyGraph = (entry) => {
   const graphArray = [entryInfo]
   // This is a for loop over an array whose length will change
   for (const module of graphArray) {
-    if (graphArray.length > 999) {
-      console.error('Graph too large exiting 1')
-      process.exit(1)
-    }
     module.map = {}
     module.deps.forEach((depPath) => {
       const moduleDepPath = resolve(depPath, { basedir: path.dirname(module.fp) })
       const moduleInfo = createModuleInfo(moduleDepPath, ++id)
-      if (graphArrayCircularDependencyAlreadySatisfied(graphArray, module.fp, moduleInfo.fp)) {
-        console.warn(`WARN: module ${module.fp} and ${moduleInfo.fp} both already exist in the graph potential unsupported circular dependency. Not pushing another node into the graph, but runtime state is at risk`)
-        const _m = graphArray.find(_module => _module.fp === moduleInfo.fp)
-        module.map[depPath] = _m.id
-      } else {
-        graphArray.push(moduleInfo)
-        module.map[depPath] = moduleInfo.id
-      }
+      graphArray.push(moduleInfo)
+      module.map[depPath] = moduleInfo.id
     })
   }
 
@@ -111,3 +94,34 @@ module.exports = {
   createDependencyGraph,
   pack
 }
+
+
+// Aside
+// Here some was some work I tried to do to begin working against circular dependencies making the program hang for forever
+
+
+
+// const graphArrayCircularDependencyAlreadySatisfied = (graphArray, fp1, fp2) => {
+//   const fp1Found = graphArray.find(_module => _module.fp === fp1)
+//   const fp2Found = graphArray.find(_module => _module.fp === fp2)
+//   if (fp1Found && fp2Found) {
+//     return true
+//   }
+// }
+
+
+
+// The section is inside the module.deps.forEach loop
+// if (graphArray.length > 999) {
+//   console.error('Graph too large exiting 1')
+//   process.exit(1)
+// }
+
+// if (graphArrayCircularDependencyAlreadySatisfied(graphArray, module.fp, moduleInfo.fp)) {
+//   console.warn(`WARN: module ${module.fp} and ${moduleInfo.fp} both already exist in the graph potential unsupported circular dependency. Not pushing another node into the graph, but runtime state is at risk`)
+//   const _m = graphArray.find(_module => _module.fp === moduleInfo.fp)
+//   module.map[depPath] = _m.id
+// } else {
+//   graphArray.push(moduleInfo)
+//   module.map[depPath] = moduleInfo.id
+// }

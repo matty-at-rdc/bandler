@@ -32,7 +32,7 @@ const iifeBundlerVerbose = (moduleArgArr) => `
     // looking up the module by the provided id.
     const {factory, map} = modules[id];
 
-    // We delcare an inner function called localRequire. 
+    // We declare an inner function called localRequire. 
     // It is a function which itself calls the "require" function
     // which you are in right now (whoa!). It accepts an argument 
     // called requireDeclarationName which will be a "key" 
@@ -47,7 +47,7 @@ const iifeBundlerVerbose = (moduleArgArr) => `
 
     // We call the "factory" function we extracted from the module object 
     // we provide as parameter the module.exports object we made above
-    // and the localRequore function which is a closured and which
+    // and the localRequire function which is a closured and which
     // itself has a closured around this instance of "require"
     factory(module.exports, localRequire); 
 

@@ -38,6 +38,9 @@ var _m = require("./m2.js");
 var determineCoolness = function determineCoolness() {
   return (0, _m.add)(4, 5);
 };
+
+// Circular
+// export const magicNumber = () => 1
 exports.determineCoolness = determineCoolness;
   },
   map: {"./m2.js":2}
@@ -49,6 +52,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.add = void 0;
+// Circular
+// import { magicNumber } from "./m1"
+// const someNum = magicNumber()
 var someNum = 0;
 var add = function add(a, b) {
   return a + b + someNum;
