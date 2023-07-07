@@ -80,6 +80,8 @@ const createDependencyGraph = (entry) => {
     })
   }
 
+  console.log(graphArray)
+
   return graphArray
 }
 
